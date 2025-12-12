@@ -1,4 +1,3 @@
-from itertools import product
 from django.shortcuts import render, redirect
 from  .forms import ProductForms
 from .models import Product
@@ -14,7 +13,7 @@ def home(request):
 # define the create view
 def ProductCreateView(request):
     form = ProductForms()
-    if request.methond == 'POST':
+    if request.method == 'POST':
         form = ProductForms(request.POST)
         if form.is_valid():
             form.save()
@@ -31,7 +30,7 @@ def ProductListView(request):
 
 # define the product update view
 def ProductUpdateView(request, product_id):
-    product = Product.objects.get(product_id=product_id)
+    product = Product.objects.get(id=product_id)
     form = ProductForms()
     if request.method == "POST":
         form = ProductForms(request.POST, instance=product)
@@ -44,7 +43,7 @@ def ProductUpdateView(request, product_id):
 
 
 def ProductDelView(request, product_id):
-    product = Product.objects.get(product_id=product_id)
+    product = Product.objects.get(id=product_id)
     if request.method == 'POST':
         product.delete()
         return redirect('product-list')
